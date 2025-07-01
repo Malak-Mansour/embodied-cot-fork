@@ -10,7 +10,7 @@ from google.api_core.exceptions import ResourceExhausted
 
 from scripts.generate_embodied_data.primitive_movements import get_move_primitives_episode
 from scripts.generate_embodied_data.gripper_positions import get_corrected_positions
-
+import torch
 
 # class Gemini:
 #     def __init__(self):

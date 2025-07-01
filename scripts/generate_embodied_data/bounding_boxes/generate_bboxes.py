@@ -41,7 +41,7 @@ end = (args.id + 1) * split_percents
 # ds = tfds.load("bridge_orig", data_dir=args.data_path, split=f"train[{start}%:{end}%]")
 import glob
 import h5py
-dataset_paths = sorted(glob.glob(os.path.join(args.data_path, "*.hdf5")))
+dataset_paths = sorted(glob.glob(os.path.join(args.data_path, "*.h5")))
 selected_paths = dataset_paths[start * len(dataset_paths) // 100 : end * len(dataset_paths) // 100]
 print("Done.")
 
