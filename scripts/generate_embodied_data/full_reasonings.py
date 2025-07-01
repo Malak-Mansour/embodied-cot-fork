@@ -1,49 +1,21 @@
+# python scripts/generate_embodied_data/full_reasonings.py
+
+
 import json
 import os
 import re
-import time
-import tensorflow as tf
-import tensorflow_datasets as tfds
-
-import google.generativeai as genai
-from google.api_core.exceptions import ResourceExhausted
-
-from scripts.generate_embodied_data.primitive_movements import get_move_primitives_episode
-from scripts.generate_embodied_data.gripper_positions import get_corrected_positions
 import torch
+import h5py
+import numpy as np
 
-# class Gemini:
-#     def __init__(self):
-#         api_key = "PUT_KEY_HERE"
-#         genai.configure(api_key=api_key)
+from primitive_movements_2 import get_move_primitives_episode
+from gripper_positions import get_corrected_positions
 
-#         self.model = genai.GenerativeModel("gemini-1.5-flash")
-
-#     def safe_call(self, f):
-#         while True:
-#             try:
-#                 res = f()
-#                 return res
-#             except ResourceExhausted:
-#                 time.sleep(5)
-
-#     def generate(self, prompt):
-#         chat = self.safe_call(lambda: self.model.start_chat(history=[]))
-#         response = self.safe_call(lambda: chat.send_message(prompt).text)
-
-#         for i in range(8):
-#             if "FINISHED" in response:
-#                 print(f"n_retries: {i}")
-#                 return response
-
-#             response = response + self.safe_call(lambda: chat.send_message("Truncated, please continue.").text)
-
-#         print(f"n_retries: {iter}")
-
-#         return None
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
+import tensorflow as tf  # Add at the top if not already
+
 class LocalLLM:
-    def __init__(self, model_name="mistralai/Mistral-7B-Instruct-v0.2", device="cuda"):
+    def __init__(self, model_name="teknium/OpenHermes-2.5-Mistral-7B", device="cuda"):
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.model = AutoModelForCausalLM.from_pretrained(
             model_name, device_map="auto", torch_dtype=torch.float16
@@ -216,38 +188,72 @@ def get_reasoning_dict(features, metadata, lm):
     return extract_reasoning_dict(reasoning_output)
 
 
-def build_single_reasoning(episode_id, builder, lm, captions):
-    ds = builder.as_dataset(split=f"train[{episode_id}:{episode_id + 1}]")
-    episode = next(iter(ds))
+def build_single_reasoning(h5_path, lm, captions):
+    entries = {}
+    with h5py.File(h5_path, "r") as f:
+        ep_keys = list(f.keys())
+        for ep_key in ep_keys:
+            episode = f[ep_key]
+            obs = episode["obs"]
+            ee_states = obs["ee_states"][:, :3]
+            gripper = obs["gripper_states"][:, 0]
+            actions = episode["teleop_actions"][:, :3]  # relative movement
 
-    ft = dict()
+            lang_instr = ep_key.replace("_", " ")
 
-    ft["state_3d"] = [list(step["observation"]["state"][:3].numpy()) for step in episode["steps"]]
+            # Construct BridgeV2-style episode
+            ep_struct = {
+                "steps": [],
+                "episode_metadata": {
+                    "episode_id": ep_key,
+                    "file_path": os.path.basename(h5_path),
+                }
+            }
 
-    move_primitives = get_move_primitives_episode(episode)
-    ft["move_primitive"] = [move[0] for move in move_primitives]
+            # for i in range(len(ee_states)):
+            #     step = {
+            #         "observation": {
+            #             "state": ee_states[i],
+            #         },
+            #         "action": actions[i],  # ✅ KEY FIX
+            #         "language_instruction": lang_instr.encode(),
+            #     }
+            #     ep_struct["steps"].append(step)
+            for i in range(len(ee_states)):
+                step = {
+                    "observation": {
+                        "state": tf.convert_to_tensor(ee_states[i]),  # ✅ Make it compatible
+                    },
+                    "action": tf.convert_to_tensor(actions[i]),       # ✅ Fix this line
+                    "language_instruction": lang_instr.encode(),
+                }
+                ep_struct["steps"].append(step)
 
-    ft["gripper_positions"] = get_corrected_positions(episode_id, builder, plot=False)
 
-    mt = {
-        "episode_id": str(int(episode["episode_metadata"]["episode_id"].numpy())),
-        "file_path": str(episode["episode_metadata"]["file_path"].numpy())[2:-1],
-        "n_steps": len(episode["steps"]),
-        "language_instruction": str(next(iter(episode["steps"]))["language_instruction"].numpy().decode()),
-    }
+            # Now compatible with get_move_primitives_episode()
+            move_primitives = get_move_primitives_episode(ep_struct)
+            ft = {
+                "state_3d": ee_states.tolist(),
+                "move_primitive": [m[0] for m in move_primitives],
+                "gripper_positions": get_corrected_positions(ep_key, h5_path, plot=False),
+            }
 
-    mt["caption"] = captions[mt["file_path"]][mt["episode_id"]]["caption"]
+            mt = {
+                "episode_id": ep_key,
+                "file_path": os.path.basename(h5_path),
+                "n_steps": len(ee_states),
+                "language_instruction": lang_instr,
+                "caption": captions.get(h5_path, {}).get(ep_key, {}).get("caption", "")
+            }
 
-    reasoning = get_reasoning_dict(ft, mt, lm)
-    entry = {"reasoning": reasoning, "features": ft, "metadata": mt}
+            reasoning = get_reasoning_dict(ft, mt, lm)
+            entries[ep_key] = {"reasoning": reasoning, "features": ft, "metadata": mt}
 
-    return entry
+    return entries
 
-
-def generate_reasonings(builder, episode_ids, save_path="reasonings.json"):
+def generate_reasonings(dataset_paths, lm, save_path="reasonings.json"):
     reasonings = dict()
     # lm = Gemini()
-    lm = LocalLLM()  # Or specify another open model
 
     if os.path.exists(save_path):
         print(save_path, "existing, loading contents")
@@ -256,28 +262,36 @@ def generate_reasonings(builder, episode_ids, save_path="reasonings.json"):
 
         print("loaded reasonings:", sum([len(v) for v in reasonings.values()]), "entries")
 
-    with open("captions.json", "r") as captions_file:
+    with open("results_0.json", "r") as captions_file:
         captions_dict = json.load(captions_file)
 
-    for i in episode_ids:
-        entry = build_single_reasoning(i, builder, lm, captions_dict)
-
-        if entry["metadata"]["file_path"] in reasonings.keys():
-            reasonings[entry["metadata"]["file_path"]][entry["metadata"]["episode_id"]] = entry
-        else:
-            reasonings[entry["metadata"]["file_path"]] = {entry["metadata"]["episode_id"]: entry}
-
-        print("computed reasoning:", entry)
+    for h5_path in dataset_paths:
+        episode_entries = build_single_reasoning(h5_path, lm, captions_dict)
+        for ep_id, entry in episode_entries.items():
+            file_key = entry["metadata"]["file_path"]
+            if file_key not in reasonings:
+                reasonings[file_key] = {}
+            reasonings[file_key][ep_id] = entry
 
     with open(save_path, "w") as out_f:
         json.dump(reasonings, out_f)
 
 
 if __name__ == "__main__":
-    builder = tfds.builder_from_directory(builder_dir='<TODO: Enter path to BridgeV2>')
-    episode_ids = range(53192)  # All training episodes
+    # builder = tfds.builder_from_directory(builder_dir='<TODO: Enter path to BridgeV2>')
+    # episode_ids = range(53192)  # All training episodes
+
+    import glob
+    dataset_paths = sorted(glob.glob("/l/users/malak.mansour/Datasets/do_manual/hdf5/*.h5"))
 
     # NOTE the generator expects the captions.json file to be present in the working directory
     # The captions should be generated using the script in
     # scripts/generate_embodied_data/bounding_boxes/generate_descriptions.py
-    generate_reasonings(builder, episode_ids)
+    # generate_reasonings(builder, episode_ids)
+    reasonings = {}
+    lm = LocalLLM()
+
+    with open("results_0.json", "r") as captions_file:
+        captions_dict = json.load(captions_file)
+
+    generate_reasonings(dataset_paths, lm)

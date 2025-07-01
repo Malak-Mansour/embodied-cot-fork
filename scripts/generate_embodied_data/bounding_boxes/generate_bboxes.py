@@ -1,9 +1,5 @@
 '''
-python scripts/generate_embodied_data/bounding_boxes/generate_bboxes_from_hdf5.py \
-  --id 0 \
-  --gpu 0 \
-  --splits 4 \
-  --data-path /l/users/malak.mansour/Datasets/do_manual/hdf5 \
+python scripts/generate_embodied_data/bounding_boxes/generate_bboxes.py --id 0 --gpu 0 --splits 4 --data-path /l/users/malak.mansour/Datasets/do_manual/hdf5 
 '''
 
 import argparse
@@ -34,21 +30,22 @@ bbox_json_path = os.path.join(args.result_path, f"results_{args.id}_bboxes.json"
 viz_dir = os.path.join(args.result_path, "visualizations")
 
 print("Loading data...")
-split_percents = 100 // args.splits
-start = args.id * split_percents
-end = (args.id + 1) * split_percents
+# split_percents = 100 // args.splits
+# start = args.id * split_percents
+# end = (args.id + 1) * split_percents
 
 # ds = tfds.load("bridge_orig", data_dir=args.data_path, split=f"train[{start}%:{end}%]")
 import glob
 import h5py
 dataset_paths = sorted(glob.glob(os.path.join(args.data_path, "*.h5")))
-selected_paths = dataset_paths[start * len(dataset_paths) // 100 : end * len(dataset_paths) // 100]
+# selected_paths = dataset_paths[start * len(dataset_paths) // 100 : end * len(dataset_paths) // 100]
+selected_paths = dataset_paths
 print("Done.")
 
 print("Loading Prismatic descriptions...")
-results_json_path = "./descriptions/full_descriptions.json"
-with open(results_json_path, "r") as f:
-    results_json = json.load(f)
+results_json_path = "results_0.json"
+with open(results_json_path, "r") as results_f:
+    results_json = json.load(results_f)
 print("Done.")
 
 print(f"Loading gDINO to device {args.gpu}...")
@@ -168,7 +165,7 @@ for file_path in selected_paths:
                 "bboxes": bboxes_list,
             }
 
-            with open(bbox_json_path, "w") as f:
-                json.dump(bbox_results_json, f, cls=NumpyFloatValuesEncoder)
+            with open(bbox_json_path, "w") as out_f:
+                json.dump(bbox_results_json, out_f, cls=NumpyFloatValuesEncoder)
             # print(f"ID {args.id} finished ep ({ep_idx} / {len(ds)}). Elapsed time: {round(end - start, 2)}")
             print(f"✅ {file_path} / {ep_name} done. Time: {round(time.time() - start_time, 2)}s")
