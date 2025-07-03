@@ -66,27 +66,17 @@ def classify_movement(move, threshold=0.03):
 move_actions = dict()
 
 
-# New: Compatible with HDF5 episode format
 def get_move_primitives_episode(episode, threshold=0.03):
-    """
-    Given a dict-style HDF5 episode with keys:
-        episode["obs"]["ee_states"]: (N, 6)
-        episode["obs"]["gripper_states"]: (N, 1)
-    This function returns the list of (label, vector) for each primitive movement.
-    """
-
     ee_states = np.array(episode["obs"]["ee_states"])               # (N, 6)
     gripper_states = np.array(episode["obs"]["gripper_states"]).squeeze(-1)  # (N,)
     states = np.concatenate([ee_states, gripper_states[:, None]], axis=1)   # (N, 7)
 
-    # Sliding window of 4 states to classify movements
-    move_trajs = [states[i : i + 4] for i in range(len(states) - 4)]
+    move_trajs = [states[i : i + 4] for i in range(len(states) - 1)]  # ← match original
 
     primitives = [classify_movement(move, threshold) for move in move_trajs]
-    primitives.append(primitives[-1])  # repeat last for alignment
+    primitives.append(primitives[-1])  # to align with N
 
     return primitives
-
 
 # Deprecated for your case — TFDS version kept for reference
 def get_move_primitives(episode_id, builder):

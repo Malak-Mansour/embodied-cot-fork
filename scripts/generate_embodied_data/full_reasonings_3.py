@@ -1,43 +1,62 @@
+# python scripts/generate_embodied_data/full_reasonings_3.py
+
 import json
 import os
 import re
 import h5py
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
-
+import traceback
 
 from primitive_movements_2 import get_move_primitives_episode
-from gripper_positions_2 import get_corrected_positions
+from gripper_positions_3 import get_corrected_positions
 
 
 class LocalLLM:
     def __init__(self, model_name="teknium/OpenHermes-2.5-Mistral-7B", device="cuda"):
-        print("🔄 Loading model:", model_name)
+        print("🔄 Loading local LLM:", model_name)
         self.tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
         self.model = AutoModelForCausalLM.from_pretrained(model_name, device_map=device, torch_dtype=torch.bfloat16)
         self.device = device
+        print("✅ Model loaded successfully.")
 
     def generate(self, prompt, max_new_tokens=1024):
+        print("🧠 Sending prompt to model...")
         inputs = self.tokenizer(prompt, return_tensors="pt").to(self.device)
         outputs = self.model.generate(**inputs, max_new_tokens=max_new_tokens)
+        print(f"📥 Output generated {outputs}.")
         return self.tokenizer.decode(outputs[0], skip_special_tokens=True)
+        # return self.tokenizer.decode(outputs[0], skip_special_tokens=False)
 
 
 def build_prompt(features, language_instruction, caption=None, list_only_moves=False):
+    print("📄 Building prompt...")
+
+
+    # 🛑 Check that all feature lists are the same length
+    # lengths = {k: len(v) for k, v in features.items()}
+    # if len(set(lengths.values())) > 1:
+    #     raise ValueError(f"❌ Inconsistent feature lengths: {lengths}")
+
     structured_features = "{\n"
     keys = list(features.keys())
     for i in range(len(features[keys[0]])):
         if list_only_moves:
             structured_features += f'    {i}: "{features["move_primitive"][i]}"\n'
         else:
-            structured_features += f'    {i}: {{\n'
+            structured_features += f'    {i}: {"{"}\n'
             for key in keys:
-                val = features[key][i]
-                val = f'"{val}"' if isinstance(val, str) else val
-                structured_features += f'        "{key}": {val},\n'
-            structured_features += "    },\n"
-    structured_features += "}"
+                feature_value = features[key][i]
+                if isinstance(feature_value, str):
+                    feature_value = f'"{feature_value}"'
 
+                structured_features = structured_features + f'        "{key}": {feature_value},\n'
+
+            structured_features = structured_features + "    },\n"
+
+    structured_features += "}"
+    print("✅ Prompt built.")
+    
     features_desc = (
         "Each entry in that dictionary corresponds to a single step on the trajectory and describes the move that is "
         "about to be executed." if list_only_moves else
@@ -51,6 +70,23 @@ def build_prompt(features, language_instruction, caption=None, list_only_moves=F
     break_line = ""
 
     return f"""# Annotate the training trajectory with reasoning
+
+You must output a Python dictionary with the following structure:
+
+```python
+{{
+  0: "<task>...</task><plan>...</plan><subtask>...</subtask><subtask_reason>...</subtask_reason><move>...</move><move_reason>...</move_reason>",
+  1: "...",
+  ...
+}}
+```
+
+Each value must be a string including exactly these 6 XML-style tags. No explanation outside the dictionary. End with:
+```
+FINISHED
+```
+
+
 
 ## Instruction
 "{language_instruction}"
@@ -105,7 +141,7 @@ break_line}and place it inside a tag <plan>.
 break_line}inside a tag <subtask>.
 - Describe why the chosen high-level step should be executed now, which features of the current environment influence {
 break_line}that decision, and how it should be done. Place it within a tag <subtask_reason>.
-- Describe the current primitive movement of the arm that needs to be executed, and place it inside a tag <move>.
+- Copy the current primitive movement from the `move_primitive` field at this step and place it exactly inside a tag <move>.
 - Describe why the chosen movement should be executed now and which features of the current environment influence that {
 break_line}decision. Place it inside a tag <move_reason>.
 
@@ -119,7 +155,11 @@ Here is a breakdown of what needs to be done:
 - For each step on the trajectory, describe the reasoning that leads to determining the correct action. The reasoning {
 break_line}should be descriptive and precise. You should provide exactly one reasoning string for each step on the {
 break_line}trajectory specified by `trajectory_features`.
-- At the very end of the response, write a single label FINISHED to indicate that the answer is complete."""
+- At the very end of the response, write a single label FINISHED to indicate that the answer is complete.
+
+
+"""
+
 
 def find_task_occurrences(input_string, tags):
     pattern = r"(\d+):"
@@ -136,25 +176,26 @@ def extract_reasoning_dict(reasoning_output, tags=("task", "plan", "subtask", "s
         for match in find_task_occurrences(reasoning_output, tags)
     }
 
-
 def get_reasoning_dict(features, metadata, lm):
     prompt = build_prompt(features, metadata["language_instruction"], caption=metadata.get("caption", ""), list_only_moves=True)
     print("🧠 Prompt built. Generating reasoning...")
     reasoning_output = lm.generate(prompt)
     print("📥 Output received.")
+    with open("last_model.txt", "w") as test:
+        test.write(reasoning_output)
+
+    print("🖨 Raw model output:\n", reasoning_output)
     return extract_reasoning_dict(reasoning_output)
 
 
 def load_episode_h5(h5_path):
     with h5py.File(h5_path, "r") as f:
-        # Get top-level group (e.g. "episode_9")
         top_group_name = next(iter(f.keys()))
         g = f[top_group_name]
 
         print(f"\n📂 Loaded episode group: {top_group_name} from {h5_path}")
         g.visititems(lambda name, obj: print(f" - {name}"))
 
-        # Required keys check
         required = ["obs/ee_states", "obs/gripper_states", "obs/agentview_rgb"]
         for key in required:
             if key not in g:
@@ -176,29 +217,42 @@ def load_episode_h5(h5_path):
         }
 
 
-
 def build_single_reasoning_h5(h5_path, lm, captions):
+    print(f"\n🚧 Processing {h5_path}")
     episode = load_episode_h5(h5_path)
     obs = episode["obs"]
 
+    print("🔍 Extracting primitives...")
+    primitives = get_move_primitives_episode(episode)
+    print(f"✅ Primitives extracted {primitives}.")
+
+    print("📍 Computing gripper positions...")
+    gripper_positions = get_corrected_positions(
+        episode["metadata"]["episode_id"],
+        episode,
+        plot=False
+    )
+    print(f"✅ Gripper positions computed {gripper_positions}.")
+
     ft = {
         "state_3d": obs["ee_states"][:, :3].tolist(),
-        "move_primitive": [move[0] for move in get_move_primitives_episode(episode)],
-        "gripper_positions": get_corrected_positions(
-            episode["metadata"]["episode_id"],
-            episode,
-            plot=False
-        ),
+        "move_primitive": [move[0] for move in primitives],
+        "gripper_positions": gripper_positions.tolist()
     }
 
     mt = episode["metadata"]
-    mt["caption"] = captions[mt["file_path"]][mt["episode_id"]]["caption"]
+    caption = captions.get(mt["file_path"], {}).get(mt["episode_id"], {}).get("caption", "")
+    mt["caption"] = caption
+    print(f"📝 Caption added: {caption[:150]}...")
 
+    print("🧠 Starting reasoning generation...")
     reasoning = get_reasoning_dict(ft, mt, lm)
+    print(f"✅ Reasoning completed {reasoning}.")
+
     return {"reasoning": reasoning, "features": ft, "metadata": mt}
 
 
-def generate_reasonings(h5_file_paths, save_path="reasonings.json"):
+def generate_reasonings(h5_file_paths, save_path="reasonings_3.json"):
     reasonings = {}
     lm = LocalLLM()
 
@@ -210,16 +264,23 @@ def generate_reasonings(h5_file_paths, save_path="reasonings.json"):
         captions_dict = json.load(captions_file)
 
     for h5_path in h5_file_paths:
-        entry = build_single_reasoning_h5(h5_path, lm, captions_dict)
-        file_key, ep_id = entry["metadata"]["file_path"], entry["metadata"]["episode_id"]
-        reasonings.setdefault(file_key, {})[ep_id] = entry
-        print(f"✅ Reasoning saved for {file_key} episode {ep_id}")
+        try:
+            entry = build_single_reasoning_h5(h5_path, lm, captions_dict)
+            file_key, ep_id = entry["metadata"]["file_path"], entry["metadata"]["episode_id"]
+            reasonings.setdefault(file_key, {})[ep_id] = entry
+            print(f"✅ Saved reasoning for: {file_key} | Episode: {ep_id}")
+        except Exception as e:
+            print(f"❌ Error processing {h5_path}: {e}")
+            traceback.print_exc()
 
+    print(f"\n💾 Writing final JSON to {save_path}")
     with open(save_path, "w") as out_f:
         json.dump(reasonings, out_f, indent=2)
+    print("✅ Done.")
 
 
 if __name__ == "__main__":
     h5_dir = "/l/users/malak.mansour/Datasets/do_manual/hdf5"
     h5_files = [os.path.join(h5_dir, f) for f in os.listdir(h5_dir) if f.endswith(".h5")]
+    print(f"\n📁 Found {len(h5_files)} .h5 files to process.")
     generate_reasonings(h5_files)
