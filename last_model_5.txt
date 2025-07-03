@@ -29,19 +29,19 @@ trajectory_features = {
     2: "stop"
     3: "stop"
     4: "stop"
-    5: "stop"
-    6: "stop"
-    7: "stop"
-    8: "stop"
-    9: "stop"
-    10: "move left"
-    11: "move left"
-    12: "move left"
-    13: "move left"
-    14: "move left"
-    15: "move left"
-    16: "move left"
-    17: "move left"
+    5: "rotate clockwise"
+    6: "rotate clockwise"
+    7: "rotate clockwise"
+    8: "move forward"
+    9: "move forward"
+    10: "move forward"
+    11: "move forward"
+    12: "move forward"
+    13: "move forward"
+    14: "stop"
+    15: "stop"
+    16: "stop"
+    17: "stop"
     18: "stop"
     19: "stop"
     20: "stop"
@@ -51,9 +51,9 @@ trajectory_features = {
     24: "stop"
     25: "stop"
     26: "stop"
-    27: "move down, rotate clockwise"
-    28: "move down, rotate clockwise"
-    29: "rotate clockwise"
+    27: "stop"
+    28: "stop"
+    29: "stop"
     30: "stop"
     31: "stop"
     32: "stop"
@@ -87,56 +87,56 @@ trajectory_features = {
     60: "stop"
     61: "stop"
     62: "stop"
-    63: "close gripper"
-    64: "close gripper"
-    65: "close gripper"
+    63: "stop"
+    64: "stop"
+    65: "stop"
     66: "stop"
     67: "stop"
     68: "stop"
-    69: "stop"
-    70: "stop"
-    71: "stop"
+    69: "close gripper"
+    70: "close gripper"
+    71: "close gripper"
     72: "stop"
     73: "stop"
-    74: "move up"
-    75: "move up"
-    76: "move up"
-    77: "move up"
+    74: "stop"
+    75: "stop"
+    76: "stop"
+    77: "stop"
     78: "move up"
     79: "move up"
     80: "move up"
     81: "move up"
     82: "move up"
-    83: "move up"
-    84: "move up"
-    85: "move up"
-    86: "move right"
-    87: "move right"
-    88: "move right"
-    89: "move right, tilt down"
-    90: "move right, tilt down"
-    91: "move right, tilt down"
-    92: "move right"
-    93: "move right"
-    94: "move right"
+    83: "stop"
+    84: "stop"
+    85: "stop"
+    86: "stop"
+    87: "stop"
+    88: "stop"
+    89: "stop"
+    90: "stop"
+    91: "stop"
+    92: "stop"
+    93: "stop"
+    94: "stop"
     95: "stop"
     96: "stop"
-    97: "stop"
-    98: "stop"
-    99: "stop"
+    97: "tilt down"
+    98: "tilt down"
+    99: "tilt down"
     100: "stop"
     101: "stop"
     102: "stop"
     103: "stop"
-    104: "stop"
-    105: "stop"
-    106: "move right"
-    107: "stop"
-    108: "stop"
-    109: "stop"
-    110: "move right"
-    111: "move right"
-    112: "move right"
+    104: "tilt up"
+    105: "tilt up"
+    106: "tilt up"
+    107: "rotate counterclockwise"
+    108: "tilt down, rotate counterclockwise"
+    109: "tilt down, rotate counterclockwise"
+    110: "move backward, tilt down"
+    111: "move backward"
+    112: "stop"
     113: "stop"
     114: "stop"
     115: "stop"
@@ -150,18 +150,18 @@ trajectory_features = {
     123: "stop"
     124: "stop"
     125: "stop"
-    126: "tilt up"
-    127: "tilt up"
-    128: "tilt up"
+    126: "stop"
+    127: "stop"
+    128: "stop"
     129: "stop"
     130: "stop"
     131: "stop"
     132: "stop"
     133: "stop"
     134: "stop"
-    135: "tilt down"
-    136: "tilt down"
-    137: "tilt down"
+    135: "stop"
+    136: "stop"
+    137: "stop"
     138: "stop"
     139: "stop"
     140: "stop"
@@ -179,13 +179,13 @@ trajectory_features = {
     152: "stop"
     153: "stop"
     154: "stop"
-    155: "tilt up"
-    156: "tilt up, open gripper"
-    157: "tilt up, open gripper"
-    158: "open gripper"
-    159: "stop"
-    160: "stop"
-    161: "stop"
+    155: "stop"
+    156: "stop"
+    157: "stop"
+    158: "stop"
+    159: "tilt up"
+    160: "tilt up"
+    161: "tilt up"
     162: "stop"
     163: "stop"
     164: "stop"
@@ -194,17 +194,17 @@ trajectory_features = {
     167: "stop"
     168: "stop"
     169: "stop"
-    170: "move up, tilt down"
-    171: "move up, tilt down"
-    172: "tilt down"
+    170: "stop"
+    171: "stop"
+    172: "stop"
     173: "stop"
     174: "stop"
     175: "stop"
     176: "stop"
     177: "stop"
-    178: "move up"
-    179: "move up"
-    180: "move up"
+    178: "stop"
+    179: "stop"
+    180: "stop"
     181: "stop"
     182: "stop"
     183: "stop"
@@ -212,13 +212,26 @@ trajectory_features = {
     185: "stop"
     186: "stop"
     187: "stop"
-    188: "stop"
-    189: "stop"
-    190: "stop"
+    188: "open gripper"
+    189: "open gripper"
+    190: "open gripper"
     191: "stop"
     192: "stop"
     193: "stop"
     194: "stop"
+    195: "stop"
+    196: "stop"
+    197: "move up"
+    198: "move up"
+    199: "tilt down"
+    200: "tilt down"
+    201: "tilt down"
+    202: "stop"
+    203: "stop"
+    204: "stop"
+    205: "stop"
+    206: "stop"
+    207: "stop"
 }
 ```
 
@@ -227,7 +240,7 @@ Each entry in that dictionary corresponds to a single step on the trajectory and
 
 
 ## Scene description
-The robot task is to describe the scene with a blue and green stuffed animal, a yellow and blue plate, a white cup, and a green and yellow plush toy on a white table.## Your objective
+In this scene, there is a blue and green stuffed pineapple, a yellow and blue glove, a light blue plate with a white cup, and a small yellow plate. The pineapple is on the white table, the gloves are on the left, and the plates are in the center## Your objective
 
 I want you to annotate the given trajectory with reasoning. That is, for each step, I need to know not only which action should be chosen, but importantly what reasoning justifies that action choice. I want you to be descriptive and include all the relevant information available. The reasoning should include the task to complete, the remaining high-level steps, the high-level movements that should be executed and why they are required, the premises that allow inferring the direction of each move, including the locations of relevant objects, possible obstacles or difficulties to avoid, and any other relevant justification.
 
@@ -261,29 +274,32 @@ Here is a breakdown of what needs to be done:
 
 ## Task
 
-The task is to pick up the white cup from the yellow and blue plate and place it in the blue plate.
+Pick the cup from the yellow plate and place it in the blue plate.
 
-The high-level movements that were executed are:
 
-1. Move to the yellow and blue plate.
-2. Pick up the white cup from the yellow and blue plate.
-3. Move to the blue plate.
-4. Place the white cup in the blue plate.
 
-The plan for the solution that allowed the robot to complete the task successfully is:
+## High-level movements
 
-1. Identify the location of the yellow and blue plate and the blue plate.
-2. Move to the yellow and blue plate.
-3. Pick up the white cup from the yellow and blue plate.
-4. Move to the blue plate.
-5. Place the white cup in the blue plate.
+The robot first needs to pick up the cup from the yellow plate. To do this, it needs to move its gripper to the yellow plate, close the gripper, lift the cup, and move the cup to the blue plate. Then, it needs to place the cup on the blue plate.
+
+
+
+## Plan
+
+The robot needs to execute the following high-level steps:
+
+1. Move the gripper to the yellow plate.
+2. Close the gripper.
+3. Lift the cup.
+4. Move the cup to the blue plate.
+5. Place the cup on the blue plate.
 
 
 
 ## Reasoning
 
-```python
-{
-    0: "<task>Pick up the white cup from the yellow and blue plate and place it in the blue plate</task>\n<plan>Move to the yellow and blue plate, Pick up the white cup from the yellow and blue plate, Move to the blue plate, Place the white cup in the blue plate</plan>\n<subtask>Move to the yellow and blue plate</subtask>\n<subtask_reason>The yellow and blue plate is the starting point of the task and the white cup is located on it</subtask_reason>\n<move>move left</move>\n<move_reason>The yellow and blue plate is located to the left of the starting position</move_reason>\n<subtask>Pick up the white cup from the yellow and blue plate</subtask>\n<subtask_reason>The white cup is located on the yellow and blue plate and needs to be picked up</subtask_reason>\n<move>stop</move>\n<move_reason>The robot needs to stop moving to pick up the white cup</move_reason>\n<move>close gripper</move>\n<move_reason>The robot needs to close the gripper to pick up the white cup</move_reason>\n<subtask>Move to the blue plate</subtask>\n<subtask_reason>The blue plate is the destination of the task and the white cup needs to be placed on it</subtask_reason>\n<move>move right</move>\n<move_reason>The blue plate is located to the right of the current position</move_reason>\n<move>move down, rotate clockwise</move>\n<move_reason>The blue plate is located below the current position and the robot needs to rotate to face it</move_reason>\n<subtask>Place the white cup in the blue plate</subtask>\n<subtask_reason>The white cup is in the gripper and needs to be placed in the blue plate</subtask_reason>\n<move>stop</move>\n<move_reason>The robot needs to stop moving to place the white cup</move_reason>\n<move>open gripper</move>\n<move_reason>The robot needs to open the gripper to place the white cup</move_reason>",
-    1: "<task>Pick up the white cup from the yellow and blue plate and place it in the blue plate</task>\n<plan>Move to the yellow and blue plate, Pick up the white cup from the yellow and blue plate, Move to the blue plate, Place the white cup in the blue plate</plan>\n<subtask>Pick up the white cup from the yellow and blue plate</subtask>\n<subtask_reason>The white cup is located on the yellow and blue plate and needs to be picked up</subtask_reason>\n<move>stop</move>\n<move_reason>The robot needs to stop moving to pick up the white cup</move_reason>\n<move>close gripper</move>\n<move_reason>The robot needs to close the gripper to pick up the white cup</move_reason>",
-    2: "<task>Pick up the white cup from the yellow and blue plate and place it in the blue plate</task>\n<plan>Move to the yellow and blue plate, Pick up the white cup from the yellow and blue plate, Move to the blue plate, Place the white cup in the blue plate</plan>\n<subtask>Place the white cup in the blue plate</subtask>\n<subtask_reason>The white cup is in the gripper and needs to be placed in the blue plate</subtask_reason>\n<move>stop</move>\n<move_reason>The robot needs to stop moving to place the white cup</move_reason>\
+0: <task>Pick the cup from the yellow plate and place it in the blue plate</task><plan>Move the gripper to the yellow plate, Close the gripper, Lift the cup, Move the cup to the blue plate, Place the cup on the blue plate</plan><subtask>Move the gripper to the yellow plate</subtask><subtask_reason>The first step is to move the gripper to the yellow plate, so that the gripper can close around the cup and lift it. The yellow plate is on the table, and the gripper is currently in its initial position. The gripper needs to move to the yellow plate to be able to close around the cup.</move><move>move forward</move><move_reason>The gripper needs to move forward to reach the yellow plate. The yellow plate is on the table, and the gripper is currently in its initial position. The gripper needs to move forward to be able to close around the cup.</move>
+1: <task>Pick the cup from the yellow plate and place it in the blue plate</task><plan>Move the gripper to the yellow plate, Close the gripper, Lift the cup, Move the cup to the blue plate, Place the cup on the blue plate</plan><subtask>Close the gripper</subtask><subtask_reason>The second step is to close the gripper, so that the gripper can hold the cup. The yellow plate is on the table, and the gripper is currently moving towards it. The gripper needs to close around the cup to be able to lift it.</move><move>close gripper</move><move_reason>The gripper needs to close to be able to hold the cup. The yellow plate is on the table, and the gripper is currently moving towards it. The gripper needs to close around the cup to be able to lift it.</move>
+2: <task>Pick the cup from the yellow plate and place it in the blue plate</task><plan>Move the gripper to the yellow plate, Close the gripper, Lift the cup, Move the cup to the blue plate, Place the cup on the blue plate</plan><subtask>Lift the cup</subtask><subtask_reason>The third step is to lift the cup, so that the cup can be moved to the blue plate. The yellow plate is on the table, and the gripper is currently holding the cup. The gripper needs to lift the cup to be able to move it to the blue plate.</move><move>move up</move><move_reason>The gripper needs to lift the cup to be able to move it to the blue plate. The yellow plate is on the table, and the gripper is currently holding the cup. The gripper needs to lift the cup to be able to move it to the blue plate.</move>
+3: <task>Pick the cup from the yellow plate and place it in the blue plate</task><plan>Move the gripper to the yellow plate, Close the gripper, Lift the cup, Move the cup to the blue plate, Place the cup on the blue plate</plan><subtask>Move the cup to the blue plate</subtask><subtask_reason>The fourth step is to move the cup to the blue plate, so that the cup can be placed on the blue plate. The yellow plate is on the table, and the gripper is currently holding the cup. The blue plate is on the table, and the gripper needs to move the cup to the blue plate.</move><move>move forward</move><move_reason>The gripper needs to move the cup to the blue plate. The yellow plate is on the table, and the gripper is currently holding the cup. The blue plate is on the table, and the gripper needs to move the cup to the blue plate.</move>
+4: <task>Pick the cup from the yellow plate and place it in the
