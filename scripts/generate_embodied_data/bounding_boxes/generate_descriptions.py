@@ -1,4 +1,4 @@
-# python scripts/generate_embodied_data/bounding_boxes/generate_descriptions.py --id 0 --gpu 0
+# python scripts/generate_embodied_data/bounding_boxes/generate_descriptions.py --id 1 --gpu 0
 
 import argparse
 import json
@@ -43,7 +43,7 @@ end = (args.id + 1) * split_percents
 import h5py
 import glob
 
-dataset_paths = sorted(glob.glob("/l/users/malak.mansour/Datasets/do_manual/hdf5/*.h5"))
+dataset_paths = sorted(glob.glob("/l/users/malak.mansour/Datasets/do_manual/hdf5_rgb/*.h5"))
 # selected_paths = dataset_paths[start * len(dataset_paths) // 100 : end * len(dataset_paths) // 100]
 selected_paths = dataset_paths
 print("Selected paths:", selected_paths)

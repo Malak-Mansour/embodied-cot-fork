@@ -1,0 +1,20 @@
+/bin/bash: /l/users/malak.mansour/anaconda3/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+/bin/bash: /l/users/malak.mansour/anaconda3/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+2025-07-08 07:05:46.039196: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2025-07-08 07:05:46.039508: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2025-07-08 07:05:46.040589: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2025-07-08 07:05:46.047418: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2025-07-08 07:05:47.229888: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+Could not load the custom kernel for multi-scale deformable attention: [Errno 2] No such file or directory: '/l/users/malak.mansour/anaconda3/envs/openvla/lib/python3.10/site-packages/transformers/kernels/grounding_dino/vision.cpp'
+Could not load the custom kernel for multi-scale deformable attention: [Errno 2] No such file or directory: '/l/users/malak.mansour/anaconda3/envs/openvla/lib/python3.10/site-packages/transformers/kernels/grounding_dino/vision.cpp'
+Could not load the custom kernel for multi-scale deformable attention: [Errno 2] No such file or directory: '/l/users/malak.mansour/anaconda3/envs/openvla/lib/python3.10/site-packages/transformers/kernels/grounding_dino/vision.cpp'
+Could not load the custom kernel for multi-scale deformable attention: [Errno 2] No such file or directory: '/l/users/malak.mansour/anaconda3/envs/openvla/lib/python3.10/site-packages/transformers/kernels/grounding_dino/vision.cpp'
+Could not load the custom kernel for multi-scale deformable attention: [Errno 2] No such file or directory: '/l/users/malak.mansour/anaconda3/envs/openvla/lib/python3.10/site-packages/transformers/kernels/grounding_dino/vision.cpp'
+Could not load the custom kernel for multi-scale deformable attention: [Errno 2] No such file or directory: '/l/users/malak.mansour/anaconda3/envs/openvla/lib/python3.10/site-packages/transformers/kernels/grounding_dino/vision.cpp'
+Could not load the custom kernel for multi-scale deformable attention: [Errno 2] No such file or directory: '/l/users/malak.mansour/anaconda3/envs/openvla/lib/python3.10/site-packages/transformers/kernels/grounding_dino/vision.cpp'
+Could not load the custom kernel for multi-scale deformable attention: [Errno 2] No such file or directory: '/l/users/malak.mansour/anaconda3/envs/openvla/lib/python3.10/site-packages/transformers/kernels/grounding_dino/vision.cpp'
+Could not load the custom kernel for multi-scale deformable attention: [Errno 2] No such file or directory: '/l/users/malak.mansour/anaconda3/envs/openvla/lib/python3.10/site-packages/transformers/kernels/grounding_dino/vision.cpp'
+Could not load the custom kernel for multi-scale deformable attention: [Errno 2] No such file or directory: '/l/users/malak.mansour/anaconda3/envs/openvla/lib/python3.10/site-packages/transformers/kernels/grounding_dino/vision.cpp'
+Could not load the custom kernel for multi-scale deformable attention: [Errno 2] No such file or directory: '/l/users/malak.mansour/anaconda3/envs/openvla/lib/python3.10/site-packages/transformers/kernels/grounding_dino/vision.cpp'
+Could not load the custom kernel for multi-scale deformable attention: [Errno 2] No such file or directory: '/l/users/malak.mansour/anaconda3/envs/openvla/lib/python3.10/site-packages/transformers/kernels/grounding_dino/vision.cpp'

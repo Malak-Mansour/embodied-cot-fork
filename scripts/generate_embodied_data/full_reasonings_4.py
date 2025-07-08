@@ -1,4 +1,4 @@
-# python scripts/generate_embodied_data/full_reasonings_3.py
+# python scripts/generate_embodied_data/full_reasonings_4.py
 
 import json
 import os
@@ -271,7 +271,7 @@ def build_single_reasoning_h5(h5_path, lm, captions):
 
 
 
-def generate_reasonings(h5_file_paths, save_path="reasonings_5.json"):
+def generate_reasonings(h5_file_paths, save_path="reasonings_6.json"):
     reasonings = {}
     lm = LocalLLM()
 
@@ -304,7 +304,7 @@ def generate_reasonings(h5_file_paths, save_path="reasonings_5.json"):
 
 
 if __name__ == "__main__":
-    h5_dir = "/l/users/malak.mansour/Datasets/do_manual/hdf5"
+    h5_dir = "/l/users/malak.mansour/Datasets/do_manual/hdf5_rgb"
     h5_files = [os.path.join(h5_dir, f) for f in os.listdir(h5_dir) if f.endswith(".h5")]
     print(f"\n📁 Found {len(h5_files)} .h5 files to process.")
     generate_reasonings(h5_files)

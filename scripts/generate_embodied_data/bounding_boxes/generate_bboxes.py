@@ -1,5 +1,5 @@
 '''
-python scripts/generate_embodied_data/bounding_boxes/generate_bboxes.py --id 0 --gpu 0 --splits 4 --data-path /l/users/malak.mansour/Datasets/do_manual/hdf5 
+python scripts/generate_embodied_data/bounding_boxes/generate_bboxes.py --id 1 --gpu 0 --splits 4 --data-path /l/users/malak.mansour/Datasets/do_manual/hdf5_rgb 
 '''
 
 import argparse
@@ -27,7 +27,7 @@ parser.add_argument("--result-path", default="./bboxes")
 
 args = parser.parse_args()
 bbox_json_path = os.path.join(args.result_path, f"results_{args.id}_bboxes.json")
-viz_dir = os.path.join(args.result_path, "visualizations")
+viz_dir = os.path.join(args.result_path, f"visualizations_{args.id}")
 
 print("Loading data...")
 # split_percents = 100 // args.splits
@@ -43,7 +43,7 @@ selected_paths = dataset_paths
 print("Done.")
 
 print("Loading Prismatic descriptions...")
-results_json_path = "results_0.json"
+results_json_path = f"results_{args.id}.json"
 with open(results_json_path, "r") as results_f:
     results_json = json.load(results_f)
 print("Done.")

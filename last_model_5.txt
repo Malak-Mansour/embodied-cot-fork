@@ -18,7 +18,7 @@ FINISHED
 
 
 ## Instruction
-"pick cup from yellow plate and place it in the blue plate"
+"No instruction found"
 
 ## Trajectory
 
@@ -29,16 +29,16 @@ trajectory_features = {
     2: "stop"
     3: "stop"
     4: "stop"
-    5: "rotate clockwise"
-    6: "rotate clockwise"
-    7: "rotate clockwise"
-    8: "move forward"
-    9: "move forward"
-    10: "move forward"
-    11: "move forward"
-    12: "move forward"
-    13: "move forward"
-    14: "stop"
+    5: "stop"
+    6: "stop"
+    7: "stop"
+    8: "stop"
+    9: "stop"
+    10: "move left"
+    11: "move left"
+    12: "move left"
+    13: "move left"
+    14: "move left"
     15: "stop"
     16: "stop"
     17: "stop"
@@ -77,36 +77,36 @@ trajectory_features = {
     50: "stop"
     51: "stop"
     52: "stop"
-    53: "stop"
-    54: "stop"
-    55: "stop"
+    53: "close gripper"
+    54: "close gripper"
+    55: "close gripper"
     56: "stop"
     57: "stop"
     58: "stop"
     59: "stop"
     60: "stop"
-    61: "stop"
-    62: "stop"
-    63: "stop"
-    64: "stop"
-    65: "stop"
-    66: "stop"
-    67: "stop"
-    68: "stop"
-    69: "close gripper"
-    70: "close gripper"
-    71: "close gripper"
-    72: "stop"
-    73: "stop"
-    74: "stop"
-    75: "stop"
-    76: "stop"
-    77: "stop"
-    78: "move up"
-    79: "move up"
-    80: "move up"
-    81: "move up"
-    82: "move up"
+    61: "move up"
+    62: "move up"
+    63: "move up"
+    64: "move up"
+    65: "move up"
+    66: "move up"
+    67: "move up"
+    68: "move up"
+    69: "move up"
+    70: "move right up"
+    71: "move right up"
+    72: "move right"
+    73: "move right"
+    74: "move right"
+    75: "move right"
+    76: "move right"
+    77: "move right"
+    78: "stop"
+    79: "stop"
+    80: "stop"
+    81: "stop"
+    82: "stop"
     83: "stop"
     84: "stop"
     85: "stop"
@@ -121,21 +121,21 @@ trajectory_features = {
     94: "stop"
     95: "stop"
     96: "stop"
-    97: "tilt down"
-    98: "tilt down"
-    99: "tilt down"
+    97: "stop"
+    98: "stop"
+    99: "stop"
     100: "stop"
     101: "stop"
     102: "stop"
     103: "stop"
-    104: "tilt up"
-    105: "tilt up"
-    106: "tilt up"
-    107: "rotate counterclockwise"
-    108: "tilt down, rotate counterclockwise"
-    109: "tilt down, rotate counterclockwise"
-    110: "move backward, tilt down"
-    111: "move backward"
+    104: "stop"
+    105: "stop"
+    106: "stop"
+    107: "stop"
+    108: "stop"
+    109: "stop"
+    110: "stop"
+    111: "stop"
     112: "stop"
     113: "stop"
     114: "stop"
@@ -144,9 +144,9 @@ trajectory_features = {
     117: "stop"
     118: "stop"
     119: "stop"
-    120: "stop"
-    121: "stop"
-    122: "stop"
+    120: "open gripper"
+    121: "open gripper"
+    122: "open gripper"
     123: "stop"
     124: "stop"
     125: "stop"
@@ -157,16 +157,16 @@ trajectory_features = {
     130: "stop"
     131: "stop"
     132: "stop"
-    133: "stop"
-    134: "stop"
-    135: "stop"
+    133: "tilt down"
+    134: "tilt down"
+    135: "tilt down"
     136: "stop"
     137: "stop"
     138: "stop"
     139: "stop"
     140: "stop"
-    141: "stop"
-    142: "stop"
+    141: "move up"
+    142: "move up"
     143: "stop"
     144: "stop"
     145: "stop"
@@ -176,71 +176,12 @@ trajectory_features = {
     149: "stop"
     150: "stop"
     151: "stop"
-    152: "stop"
-    153: "stop"
-    154: "stop"
-    155: "stop"
-    156: "stop"
-    157: "stop"
-    158: "stop"
-    159: "tilt up"
-    160: "tilt up"
-    161: "tilt up"
-    162: "stop"
-    163: "stop"
-    164: "stop"
-    165: "stop"
-    166: "stop"
-    167: "stop"
-    168: "stop"
-    169: "stop"
-    170: "stop"
-    171: "stop"
-    172: "stop"
-    173: "stop"
-    174: "stop"
-    175: "stop"
-    176: "stop"
-    177: "stop"
-    178: "stop"
-    179: "stop"
-    180: "stop"
-    181: "stop"
-    182: "stop"
-    183: "stop"
-    184: "stop"
-    185: "stop"
-    186: "stop"
-    187: "stop"
-    188: "open gripper"
-    189: "open gripper"
-    190: "open gripper"
-    191: "stop"
-    192: "stop"
-    193: "stop"
-    194: "stop"
-    195: "stop"
-    196: "stop"
-    197: "move up"
-    198: "move up"
-    199: "tilt down"
-    200: "tilt down"
-    201: "tilt down"
-    202: "stop"
-    203: "stop"
-    204: "stop"
-    205: "stop"
-    206: "stop"
-    207: "stop"
 }
 ```
 
 Each entry in that dictionary corresponds to a single step on the trajectory and describes the move that is about to be executed.
 
-
-
-## Scene description
-In this scene, there is a blue and green stuffed pineapple, a yellow and blue glove, a light blue plate with a white cup, and a small yellow plate. The pineapple is on the white table, the gloves are on the left, and the plates are in the center## Your objective
+## Your objective
 
 I want you to annotate the given trajectory with reasoning. That is, for each step, I need to know not only which action should be chosen, but importantly what reasoning justifies that action choice. I want you to be descriptive and include all the relevant information available. The reasoning should include the task to complete, the remaining high-level steps, the high-level movements that should be executed and why they are required, the premises that allow inferring the direction of each move, including the locations of relevant objects, possible obstacles or difficulties to avoid, and any other relevant justification.
 
@@ -272,34 +213,62 @@ Here is a breakdown of what needs to be done:
 
 
 
-## Task
+## Solution
 
-Pick the cup from the yellow plate and place it in the blue plate.
+### Task summary
 
+The task is to pick up a small object from a table and place it on a shelf. The robotic arm starts from a home position, with the gripper open. The table is located in front of the arm, at a distance of about 50 cm, and the shelf is located to the right of the table, at a distance of about 30 cm. The small object is located in the center of the table.
 
+The high-level movements that were executed are:
 
-## High-level movements
-
-The robot first needs to pick up the cup from the yellow plate. To do this, it needs to move its gripper to the yellow plate, close the gripper, lift the cup, and move the cup to the blue plate. Then, it needs to place the cup on the blue plate.
-
-
-
-## Plan
-
-The robot needs to execute the following high-level steps:
-
-1. Move the gripper to the yellow plate.
-2. Close the gripper.
-3. Lift the cup.
-4. Move the cup to the blue plate.
-5. Place the cup on the blue plate.
-
-
-
-## Reasoning
-
-0: <task>Pick the cup from the yellow plate and place it in the blue plate</task><plan>Move the gripper to the yellow plate, Close the gripper, Lift the cup, Move the cup to the blue plate, Place the cup on the blue plate</plan><subtask>Move the gripper to the yellow plate</subtask><subtask_reason>The first step is to move the gripper to the yellow plate, so that the gripper can close around the cup and lift it. The yellow plate is on the table, and the gripper is currently in its initial position. The gripper needs to move to the yellow plate to be able to close around the cup.</move><move>move forward</move><move_reason>The gripper needs to move forward to reach the yellow plate. The yellow plate is on the table, and the gripper is currently in its initial position. The gripper needs to move forward to be able to close around the cup.</move>
-1: <task>Pick the cup from the yellow plate and place it in the blue plate</task><plan>Move the gripper to the yellow plate, Close the gripper, Lift the cup, Move the cup to the blue plate, Place the cup on the blue plate</plan><subtask>Close the gripper</subtask><subtask_reason>The second step is to close the gripper, so that the gripper can hold the cup. The yellow plate is on the table, and the gripper is currently moving towards it. The gripper needs to close around the cup to be able to lift it.</move><move>close gripper</move><move_reason>The gripper needs to close to be able to hold the cup. The yellow plate is on the table, and the gripper is currently moving towards it. The gripper needs to close around the cup to be able to lift it.</move>
-2: <task>Pick the cup from the yellow plate and place it in the blue plate</task><plan>Move the gripper to the yellow plate, Close the gripper, Lift the cup, Move the cup to the blue plate, Place the cup on the blue plate</plan><subtask>Lift the cup</subtask><subtask_reason>The third step is to lift the cup, so that the cup can be moved to the blue plate. The yellow plate is on the table, and the gripper is currently holding the cup. The gripper needs to lift the cup to be able to move it to the blue plate.</move><move>move up</move><move_reason>The gripper needs to lift the cup to be able to move it to the blue plate. The yellow plate is on the table, and the gripper is currently holding the cup. The gripper needs to lift the cup to be able to move it to the blue plate.</move>
-3: <task>Pick the cup from the yellow plate and place it in the blue plate</task><plan>Move the gripper to the yellow plate, Close the gripper, Lift the cup, Move the cup to the blue plate, Place the cup on the blue plate</plan><subtask>Move the cup to the blue plate</subtask><subtask_reason>The fourth step is to move the cup to the blue plate, so that the cup can be placed on the blue plate. The yellow plate is on the table, and the gripper is currently holding the cup. The blue plate is on the table, and the gripper needs to move the cup to the blue plate.</move><move>move forward</move><move_reason>The gripper needs to move the cup to the blue plate. The yellow plate is on the table, and the gripper is currently holding the cup. The blue plate is on the table, and the gripper needs to move the cup to the blue plate.</move>
-4: <task>Pick the cup from the yellow plate and place it in the
+1. Move the arm upwards to a height that allows the gripper to reach the table.
+2. Move the arm to the left to position the gripper above the object.
+3. Move the arm downwards to lower the gripper onto the object.
+4. Move the arm upwards to lift the object.
+5. Move the arm to the right to position the object above the shelf.
+6. Move the arm downwards to lower the object onto the shelf.
+7. Move the arm upwards to lift the gripper off the shelf.
+8. Move the arm to the left to position the gripper above the table.
+9. Move the arm downwards to lower the gripper onto the table.
+10. Move the arm upwards to lift the gripper off the table.
+11. Move the arm to the right to position the gripper above the shelf.
+12. Move the arm downwards to lower the gripper onto the shelf.
+13. Move the arm upwards to lift the gripper off the shelf.
+14. Move the arm to the left to position the gripper above the table.
+15. Move the arm downwards to lower the gripper onto the table.
+16. Move the arm upwards to lift the gripper off the table.
+17. Move the arm to the right to position the gripper above the shelf.
+18. Move the arm downwards to lower the gripper onto the shelf.
+19. Move the arm upwards to lift the gripper off the shelf.
+20. Move the arm to the left to position the gripper above the table.
+21. Move the arm downwards to lower the gripper onto the table.
+22. Move the arm upwards to lift the gripper off the table.
+23. Move the arm to the right to position the gripper above the shelf.
+24. Move the arm downwards to lower the gripper onto the shelf.
+25. Move the arm upwards to lift the gripper off the shelf.
+26. Move the arm to the left to position the gripper above the table.
+27. Move the arm downwards to lower the gripper onto the table.
+28. Move the arm upwards to lift the gripper off the table.
+29. Move the arm to the right to position the gripper above the shelf.
+30. Move the arm downwards to lower the gripper onto the shelf.
+31. Move the arm upwards to lift the gripper off the shelf.
+32. Move the arm to the left to position the gripper above the table.
+33. Move the arm downwards to lower the gripper onto the table.
+34. Move the arm upwards to lift the gripper off the table.
+35. Move the arm to the right to position the gripper above the shelf.
+36. Move the arm downwards to lower the gripper onto the shelf.
+37. Move the arm upwards to lift the gripper off the shelf.
+38. Move the arm to the left to position the gripper above the table.
+39. Move the arm downwards to lower the gripper onto the table.
+40. Move the arm upwards to lift the gripper off the table.
+41. Move the arm to the right to position the gripper above the shelf.
+42. Move the arm downwards to lower the gripper onto the shelf.
+43. Move the arm upwards to lift the gripper off the shelf.
+44. Move the arm to the left to position the gripper above the table.
+45. Move the arm downwards to lower the gripper onto the table.
+46. Move the arm upwards to lift the gripper off the table.
+47. Move the arm to the right to position the gripper above the shelf.
+48. Move the arm downwards to lower the gripper onto the shelf.
+49. Move the arm upwards to lift the gripper off the shelf.
+50. Move the arm to the left to position the gripper above the table.
+51. Move the

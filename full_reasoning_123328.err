@@ -1,0 +1,75 @@
+/bin/bash: /l/users/malak.mansour/anaconda3/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+/bin/bash: /l/users/malak.mansour/anaconda3/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+2025-07-08 07:06:16.808716: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2025-07-08 07:06:16.809033: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2025-07-08 07:06:16.810112: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2025-07-08 07:06:16.816830: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2025-07-08 07:06:18.002225: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+/l/users/malak.mansour/anaconda3/envs/openvla/lib/python3.10/site-packages/huggingface_hub/file_download.py:943: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+  warnings.warn(
+Could not find image processor class in the image processor config or the model config. Loading based on pattern matching with the model's feature extractor configuration. Please open a PR/issue to update `preprocessor_config.json` to use `image_processor_type` instead of `feature_extractor_type`. This warning will be removed in v4.40.
+/l/users/malak.mansour/anaconda3/envs/openvla/lib/python3.10/site-packages/huggingface_hub/file_download.py:943: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+  warnings.warn(
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:16<00:16, 16.86s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:17<00:00,  7.47s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:17<00:00,  8.88s/it]
+You seem to be using the pipelines sequentially on GPU. In order to maximize efficiency please use a dataset
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Traceback (most recent call last):
+  File "/l/users/malak.mansour/ICL/embodied-cot-fork/scripts/generate_embodied_data/full_reasonings_4.py", line 238, in build_single_reasoning_h5
+    gripper_positions = get_corrected_positions(
+  File "/l/users/malak.mansour/ICL/embodied-cot-fork/scripts/generate_embodied_data/gripper_positions_3.py", line 99, in get_corrected_positions
+    raise RuntimeError(f"No gripper found in episode {episode_id}")
+RuntimeError: No gripper found in episode episode_4
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:32000 for open-end generation.
